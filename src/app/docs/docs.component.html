@@ -1,142 +1,299 @@
-    <header class="docs-header">
-        <nav class="topbar" aria-label="Documentation">
-            <a class="brand" href="/docs">IAM Server</a>
-            <div class="nav-links">
-                <a href="#quickstart">Quickstart</a>
-                <a href="#overview">OIDC</a>
-                <a href="#api">API JWT</a>
-                <a href="http://localhost:8080/login">Login</a>
-            </div>
-        </nav>
+<div class="docs-shell">
+  <header class="site-header">
+    <nav class="topbar" aria-label="Documentation">
+      <a class="brand" href="/docs" aria-label="IAM Server documentation home">
+        <span tuiSurface class="brand-mark">
+          <tui-icon icon="@tui.shield-check" />
+        </span>
+        <span>
+          <strong>IAM Server</strong>
+          <small>Developer platform</small>
+        </span>
+      </a>
 
-        <section class="hero">
-            <p class="eyebrow">Developer Documentation</p>
-            <h1>Use IAM Server as an OAuth2 and OpenID Connect provider.</h1>
-            <p>
-                IAM Server issues OAuth2/OIDC tokens through Spring Authorization Server and also exposes
-                a separate JSON login API for first-party admin endpoints.
-            </p>
-            <div class="hero-actions">
-                <a class="primary-link" href="#quickstart">Start authorization code flow</a>
-                <a class="secondary-link" href="#endpoints">View endpoints</a>
+      <div class="nav-links">
+        <a href="#quickstart">Quickstart</a>
+        <a href="#endpoints">Endpoints</a>
+        <a href="#api">API login</a>
+        <a
+          appearance="secondary"
+          href="http://localhost:8080/login"
+          iconEnd="@tui.external-link"
+          size="s"
+          tuiButton
+        >
+          Open login
+        </a>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero" aria-labelledby="docs-title">
+      <div class="hero-copy">
+        <div class="hero-badges" aria-label="Technology stack">
+          <span appearance="positive" size="m" tuiBadge>Angular 19</span>
+          <span appearance="accent" size="m" tuiBadge>Taiga UI 5</span>
+          <span appearance="neutral" size="m" tuiBadge>OAuth 2.1 ready</span>
+        </div>
+
+        <p class="eyebrow">Developer documentation</p>
+        <h1 id="docs-title">Identity infrastructure with a clear integration path.</h1>
+        <p class="hero-description">
+          IAM Server is an OAuth2 and OpenID Connect provider built on Spring Authorization Server.
+          Use standards-based browser flows for applications, or the separate JSON login API for
+          first-party administration.
+        </p>
+
+        <div class="hero-actions">
+          <a href="#quickstart" iconEnd="@tui.arrow-right" size="l" tuiButton> Start with PKCE </a>
+          <a appearance="secondary" href="#endpoints" size="l" tuiButton> Browse endpoints </a>
+        </div>
+      </div>
+
+      <aside tuiCardLarge="compact" class="hero-console" aria-label="OIDC discovery example">
+        <div tuiHeader="h6">
+          <div tuiTitle>
+            Discovery endpoint
+            <span tuiSubtitle>Start every OIDC integration here</span>
+          </div>
+          <span appearance="positive" size="s" tuiBadge>200 OK</span>
+        </div>
+        <div class="console-command">
+          <span>$</span>
+          <code>curl localhost:8080/.well-known/openid-configuration</code>
+        </div>
+        <div class="console-output">
+          <div><span>"issuer"</span>: "http://localhost:8080",</div>
+          <div><span>"authorization_endpoint"</span>: ".../oauth2/authorize",</div>
+          <div><span>"token_endpoint"</span>: ".../oauth2/token",</div>
+          <div><span>"jwks_uri"</span>: ".../oauth2/jwks"</div>
+        </div>
+      </aside>
+    </section>
+
+    <section class="feature-strip" aria-label="IAM Server capabilities">
+      <article tuiCardLarge="compact">
+        <span class="feature-icon"><tui-icon icon="@tui.key-round" /></span>
+        <div tuiTitle>
+          Authorization Code + PKCE
+          <span tuiSubtitle>Secure public browser clients without a client secret.</span>
+        </div>
+      </article>
+      <article tuiCardLarge="compact">
+        <span class="feature-icon"><tui-icon icon="@tui.fingerprint" /></span>
+        <div tuiTitle>
+          OpenID Connect
+          <span tuiSubtitle>Identity tokens, discovery, UserInfo, and logout.</span>
+        </div>
+      </article>
+      <article tuiCardLarge="compact">
+        <span class="feature-icon"><tui-icon icon="@tui.braces" /></span>
+        <div tuiTitle>
+          First-party JSON API
+          <span tuiSubtitle>Short-lived access tokens with refresh-cookie rotation.</span>
+        </div>
+      </article>
+    </section>
+
+    <div class="docs-layout">
+      <aside tuiCardLarge="compact" class="toc" aria-label="On this page">
+        <p class="toc-label">On this page</p>
+        <a href="#overview"><tui-icon icon="@tui.book-open" />Overview</a>
+        <a href="#configuration"><tui-icon icon="@tui.sliders-horizontal" />Configuration</a>
+        <a href="#endpoints"><tui-icon icon="@tui.server" />Endpoints</a>
+        <a href="#quickstart"><tui-icon icon="@tui.key-round" />Authorization Code + PKCE</a>
+        <a href="#tokens"><tui-icon icon="@tui.shield-check" />Token usage</a>
+        <a href="#api"><tui-icon icon="@tui.braces" />JSON API login</a>
+        <a href="#errors"><tui-icon icon="@tui.circle-alert" />Errors</a>
+        <a href="#local-dev"><tui-icon icon="@tui.terminal" />Local development</a>
+      </aside>
+
+      <div class="docs-content">
+        <section id="overview" tuiCardLarge class="doc-section">
+          <div tuiHeader="h2">
+            <div tuiTitle>
+              Two authentication surfaces
+              <span tuiSubtitle>
+                Choose the protocol based on who owns the client and how users sign in.
+              </span>
             </div>
+            <span appearance="info" size="m" tuiBadge>Overview</span>
+          </div>
+
+          <div class="cards two-col">
+            <article tuiCardLarge="compact" class="info-card">
+              <span class="card-icon"><tui-icon icon="@tui.globe" /></span>
+              <div tuiHeader="h5">
+                <div tuiTitle>
+                  OAuth2 / OIDC browser flow
+                  <span tuiSubtitle>For SPAs and browser applications</span>
+                </div>
+              </div>
+              <p>
+                Use the standard authorization code flow with PKCE and OpenID Connect identity
+                tokens.
+              </p>
+              <ul>
+                <li>Unauthenticated authorization requests redirect to <code>/login</code>.</li>
+                <li>Login establishes a Spring Security web session.</li>
+                <li>The saved authorization request resumes after successful login.</li>
+              </ul>
+            </article>
+
+            <article tuiCardLarge="compact" class="info-card">
+              <span class="card-icon"><tui-icon icon="@tui.braces" /></span>
+              <div tuiHeader="h5">
+                <div tuiTitle>
+                  JSON JWT API
+                  <span tuiSubtitle>For server-owned administration endpoints</span>
+                </div>
+              </div>
+              <p>
+                Use the server's own REST authentication endpoints under <code>/auth</code>. This is
+                separate from the OIDC authorization-code flow.
+              </p>
+              <ul>
+                <li><code>POST /auth/login</code> returns an API access token.</li>
+                <li>The refresh token is an HTTP-only cookie scoped to <code>/auth</code>.</li>
+                <li>Protected requests use <code>Authorization: Bearer ...</code>.</li>
+              </ul>
+            </article>
+          </div>
         </section>
-    </header>
 
-    <main class="docs-layout">
-        <aside class="toc" aria-label="On this page">
-            <a href="#overview">Overview</a>
-            <a href="#configuration">Configuration</a>
-            <a href="#endpoints">Endpoints</a>
-            <a href="#quickstart">Authorization Code + PKCE</a>
-            <a href="#tokens">Token Usage</a>
-            <a href="#api">JSON API Login</a>
-            <a href="#errors">Errors</a>
-            <a href="#local-dev">Local Development</a>
-        </aside>
+        <section id="configuration" tuiCardLarge class="doc-section">
+          <div tuiHeader="h2">
+            <div tuiTitle>
+              Current development settings
+              <span tuiSubtitle>Defaults used by the seeded public client.</span>
+            </div>
+            <span appearance="neutral" size="m" tuiBadge>Configuration</span>
+          </div>
 
-        <div class="docs-content">
-            <section id="overview" class="doc-section">
-                <p class="eyebrow">Overview</p>
-                <h2>Two authentication surfaces</h2>
-                <div class="cards two-col">
-                    <article class="info-card">
-                        <h3>OAuth2 / OIDC browser flow</h3>
-                        <p>
-                            Use this for browser or SPA applications that need standard OAuth2 authorization code
-                            flow with PKCE and OpenID Connect identity tokens.
-                        </p>
-                        <ul>
-                            <li>Authorization endpoint redirects unauthenticated users to <code>/login</code>.</li>
-                            <li>Login establishes a Spring Security web session.</li>
-                            <li>The saved authorization request resumes after successful login.</li>
-                        </ul>
-                    </article>
-                    <article class="info-card">
-                        <h3>JSON JWT API</h3>
-                        <p>
-                            Use this for the server's own REST endpoints under <code>/auth</code>. It is not the same
-                            as the OIDC authorization-code flow.
-                        </p>
-                        <ul>
-                            <li><code>POST /auth/login</code> returns an API access token.</li>
-                            <li>The refresh token is stored as an HTTP-only cookie scoped to <code>/auth</code>.</li>
-                            <li>Protected API requests use <code>Authorization: Bearer ...</code>.</li>
-                        </ul>
-                    </article>
-                </div>
-            </section>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Setting</th>
+                  <th>Value</th>
+                  <th>Notes</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Issuer</td>
+                  <td><code>http://localhost:8080</code></td>
+                  <td>
+                    Configured by <code>app.oauth2.issuer</code> or <code>OAUTH2_ISSUER</code>.
+                  </td>
+                </tr>
+                <tr>
+                  <td>Client ID</td>
+                  <td><code>admin-ui</code></td>
+                  <td>Seeded on startup when it does not already exist.</td>
+                </tr>
+                <tr>
+                  <td>Client type</td>
+                  <td><span appearance="info" size="s" tuiBadge>Public client</span></td>
+                  <td>No <code>client_secret</code>. PKCE is required.</td>
+                </tr>
+                <tr>
+                  <td>Redirect URI</td>
+                  <td><code>http://localhost:3000/oauth/callback</code></td>
+                  <td>Codes are sent only to registered redirect URIs.</td>
+                </tr>
+                <tr>
+                  <td>Scopes</td>
+                  <td><code>openid profile email</code></td>
+                  <td>Consent is disabled for the seeded client.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
 
-            <section id="configuration" class="doc-section">
-                <p class="eyebrow">Configuration</p>
-                <h2>Current development settings</h2>
-                <div class="table-wrap">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Setting</th>
-                                <th>Value</th>
-                                <th>Notes</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>Issuer</td>
-                                <td><code>http://localhost:8080</code></td>
-                                <td>Configured by <code>app.oauth2.issuer</code> / <code>OAUTH2_ISSUER</code>.</td>
-                            </tr>
-                            <tr>
-                                <td>Client ID</td>
-                                <td><code>admin-ui</code></td>
-                                <td>Seeded automatically on startup if it does not already exist.</td>
-                            </tr>
-                            <tr>
-                                <td>Client type</td>
-                                <td>Public client</td>
-                                <td>No <code>client_secret</code>. PKCE is required.</td>
-                            </tr>
-                            <tr>
-                                <td>Redirect URI</td>
-                                <td><code>http://localhost:3000/oauth/callback</code></td>
-                                <td>Authorization codes are only sent to registered redirect URIs.</td>
-                            </tr>
-                            <tr>
-                                <td>Scopes</td>
-                                <td><code>openid profile email</code></td>
-                                <td>Consent is disabled for the seeded client.</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </section>
+        <section id="endpoints" tuiCardLarge class="doc-section">
+          <div tuiHeader="h2">
+            <div tuiTitle>
+              OAuth2 and OIDC endpoints
+              <span tuiSubtitle
+                >Metadata, authorization, tokens, identity, and session lifecycle.</span
+              >
+            </div>
+            <span appearance="accent" size="m" tuiBadge>Endpoint reference</span>
+          </div>
 
-            <section id="endpoints" class="doc-section">
-                <p class="eyebrow">Endpoint Reference</p>
-                <h2>OAuth2 and OIDC endpoints</h2>
-                <div class="endpoint-list">
-                    <div><code>GET /.well-known/openid-configuration</code><span>OIDC discovery metadata.</span></div>
-                    <div><code>GET /.well-known/oauth-authorization-server</code><span>OAuth2 authorization server metadata.</span></div>
-                    <div><code>GET /oauth2/authorize</code><span>Starts authorization code flow.</span></div>
-                    <div><code>POST /oauth2/token</code><span>Exchanges authorization codes for tokens.</span></div>
-                    <div><code>GET /oauth2/jwks</code><span>Public RSA JSON Web Key Set for token validation.</span></div>
-                    <div><code>GET /userinfo</code><span>OIDC UserInfo endpoint for access tokens with OIDC scopes.</span></div>
-                    <div><code>POST /oauth2/revoke</code><span>Token revocation for clients configured to use it.</span></div>
-                    <div><code>POST /oauth2/introspect</code><span>Token introspection for clients configured to use it.</span></div>
-                    <div><code>GET /connect/logout</code><span>OIDC RP-initiated logout endpoint.</span></div>
-                </div>
-            </section>
+          <div class="endpoint-list">
+            <div>
+              <span appearance="positive" size="s" tuiBadge>GET</span>
+              <code>/.well-known/openid-configuration</code>
+              <span>OIDC discovery metadata.</span>
+            </div>
+            <div>
+              <span appearance="positive" size="s" tuiBadge>GET</span>
+              <code>/.well-known/oauth-authorization-server</code>
+              <span>OAuth2 authorization-server metadata.</span>
+            </div>
+            <div>
+              <span appearance="positive" size="s" tuiBadge>GET</span>
+              <code>/oauth2/authorize</code>
+              <span>Starts authorization code flow.</span>
+            </div>
+            <div>
+              <span appearance="info" size="s" tuiBadge>POST</span>
+              <code>/oauth2/token</code>
+              <span>Exchanges authorization codes for tokens.</span>
+            </div>
+            <div>
+              <span appearance="positive" size="s" tuiBadge>GET</span>
+              <code>/oauth2/jwks</code>
+              <span>Public RSA JSON Web Key Set for validation.</span>
+            </div>
+            <div>
+              <span appearance="positive" size="s" tuiBadge>GET</span>
+              <code>/userinfo</code>
+              <span>OIDC UserInfo for access tokens with OIDC scopes.</span>
+            </div>
+            <div>
+              <span appearance="info" size="s" tuiBadge>POST</span>
+              <code>/oauth2/revoke</code>
+              <span>Token revocation for configured clients.</span>
+            </div>
+            <div>
+              <span appearance="info" size="s" tuiBadge>POST</span>
+              <code>/oauth2/introspect</code>
+              <span>Token introspection for configured clients.</span>
+            </div>
+            <div>
+              <span appearance="positive" size="s" tuiBadge>GET</span>
+              <code>/connect/logout</code>
+              <span>OIDC RP-initiated logout.</span>
+            </div>
+          </div>
+        </section>
 
-            <section id="quickstart" class="doc-section">
-                <p class="eyebrow">Quickstart</p>
-                <h2>Authorization Code + PKCE</h2>
-                <p>
-                    This is the standard browser flow for <code>admin-ui</code>. The app generates a PKCE verifier,
-                    sends the user to the authorization endpoint, receives a code on the callback URL, then exchanges
-                    that code for tokens.
-                </p>
+        <section id="quickstart" tuiCardLarge class="doc-section">
+          <div tuiHeader="h2">
+            <div tuiTitle>
+              Authorization Code + PKCE
+              <span tuiSubtitle
+                >A secure browser flow for the public <code>admin-ui</code> client.</span
+              >
+            </div>
+            <span appearance="positive" size="m" tuiBadge>Quickstart</span>
+          </div>
 
-                <h3>1. Create a PKCE verifier and challenge</h3>
-                <pre><code>const crypto = window.crypto;
+          <ol class="flow">
+            <li>
+              <span class="step-number">1</span>
+              <div>
+                <h3>Create a verifier and challenge</h3>
+                <p>Generate a high-entropy verifier and derive its SHA-256 code challenge.</p>
+              </div>
+            </li>
+          </ol>
+          <pre><code>const crypto = window.crypto;
 
 function base64UrlEncode(buffer) &#123;
   return btoa(String.fromCharCode(...new Uint8Array(buffer)))
@@ -155,8 +312,16 @@ const challengeBytes = await crypto.subtle.digest(
 );
 const codeChallenge = base64UrlEncode(challengeBytes);</code></pre>
 
-                <h3>2. Redirect the browser to <code>/oauth2/authorize</code></h3>
-                <pre><code>GET http://localhost:8080/oauth2/authorize
+          <ol class="flow" start="2">
+            <li>
+              <span class="step-number">2</span>
+              <div>
+                <h3>Redirect to <code>/oauth2/authorize</code></h3>
+                <p>Persist state, nonce, and the verifier before navigating away.</p>
+              </div>
+            </li>
+          </ol>
+          <pre><code>GET http://localhost:8080/oauth2/authorize
   ?response_type=code
   &amp;client_id=admin-ui
   &amp;redirect_uri=http%3A%2F%2Flocalhost%3A3000%2Foauth%2Fcallback
@@ -166,21 +331,34 @@ const codeChallenge = base64UrlEncode(challengeBytes);</code></pre>
   &amp;code_challenge=&#123;codeChallenge&#125;
   &amp;code_challenge_method=S256</code></pre>
 
-                <div class="note">
-                    If the user does not have a Spring Security web session, IAM Server redirects to
-                    <code>/login</code>. After a successful login, Spring Security resumes the saved authorization
-                    request.
-                </div>
+          <div appearance="info" icon="@tui.info" size="m" tuiNotification>
+            Without a Spring Security session, IAM Server redirects to <code>/login</code>. After
+            login, the saved authorization request resumes automatically.
+          </div>
 
-                <h3>3. Handle the callback</h3>
-                <pre><code>http://localhost:3000/oauth/callback?code=&#123;authorization-code&#125;&amp;state=&#123;random-csrf-state&#125;</code></pre>
-                <p>
-                    Verify that the returned <code>state</code> equals the state value stored before redirecting.
-                    Then exchange the authorization code using the same <code>code_verifier</code>.
-                </p>
+          <ol class="flow" start="3">
+            <li>
+              <span class="step-number">3</span>
+              <div>
+                <h3>Handle the callback</h3>
+                <p>Reject the response unless returned state matches the stored state exactly.</p>
+              </div>
+            </li>
+          </ol>
+          <pre><code>http://localhost:3000/oauth/callback
+  ?code=&#123;authorization-code&#125;
+  &amp;state=&#123;random-csrf-state&#125;</code></pre>
 
-                <h3>4. Exchange the code for tokens</h3>
-                <pre><code>curl -X POST http://localhost:8080/oauth2/token \
+          <ol class="flow" start="4">
+            <li>
+              <span class="step-number">4</span>
+              <div>
+                <h3>Exchange the code for tokens</h3>
+                <p>Send the original verifier. Public clients do not send a client secret.</p>
+              </div>
+            </li>
+          </ol>
+          <pre><code>curl -X POST http://localhost:8080/oauth2/token \
   -H "Content-Type: application/x-www-form-urlencoded" \
   -d "grant_type=authorization_code" \
   -d "client_id=admin-ui" \
@@ -188,132 +366,263 @@ const codeChallenge = base64UrlEncode(challengeBytes);</code></pre>
   -d "code=&#123;authorization-code&#125;" \
   -d "code_verifier=&#123;original-code-verifier&#125;"</code></pre>
 
-                <h3>5. Expected token response</h3>
-                <pre><code>&#123;
+          <ol class="flow" start="5">
+            <li>
+              <span class="step-number">5</span>
+              <div>
+                <h3>Receive the token response</h3>
+                <p>
+                  Keep access tokens in memory and validate the ID token before trusting claims.
+                </p>
+              </div>
+            </li>
+          </ol>
+          <pre><code>&#123;
   "access_token": "eyJ...",
   "scope": "openid profile email",
   "id_token": "eyJ...",
   "token_type": "Bearer",
   "expires_in": 300
 &#125;</code></pre>
-            </section>
+        </section>
 
-            <section id="tokens" class="doc-section">
-                <p class="eyebrow">Token Usage</p>
-                <h2>Validate and use tokens</h2>
+        <section id="tokens" tuiCardLarge class="doc-section">
+          <div tuiHeader="h2">
+            <div tuiTitle>
+              Validate and use tokens
+              <span tuiSubtitle
+                >Trust tokens only after issuer, signature, and time validation.</span
+              >
+            </div>
+            <span appearance="warning" size="m" tuiBadge>Token usage</span>
+          </div>
 
-                <h3>Discover server metadata</h3>
-                <pre><code>curl http://localhost:8080/.well-known/openid-configuration</code></pre>
+          <div class="command-grid">
+            <article tuiCardLarge="compact">
+              <span appearance="neutral" size="s" tuiBadge>Discovery</span>
+              <h3>Server metadata</h3>
+              <code>curl http://localhost:8080/.well-known/openid-configuration</code>
+            </article>
+            <article tuiCardLarge="compact">
+              <span appearance="neutral" size="s" tuiBadge>JWKS</span>
+              <h3>Signing keys</h3>
+              <code>curl http://localhost:8080/oauth2/jwks</code>
+            </article>
+            <article tuiCardLarge="compact">
+              <span appearance="neutral" size="s" tuiBadge>UserInfo</span>
+              <h3>Identity claims</h3>
+              <code
+                >curl http://localhost:8080/userinfo -H "Authorization: Bearer
+                &#123;token&#125;"</code
+              >
+            </article>
+          </div>
 
-                <h3>Fetch signing keys</h3>
-                <pre><code>curl http://localhost:8080/oauth2/jwks</code></pre>
+          <div class="cards two-col">
+            <article tuiCardLarge="compact" class="check-card">
+              <div tuiHeader="h5">
+                <div tuiTitle>ID token checklist</div>
+                <tui-icon icon="@tui.circle-check" />
+              </div>
+              <ul>
+                <li>Validate the RSA signature with <code>/oauth2/jwks</code>.</li>
+                <li>Validate <code>iss</code> against the configured issuer.</li>
+                <li>Validate expiration and issued-at times.</li>
+                <li>Validate <code>nonce</code> when one was sent.</li>
+              </ul>
+            </article>
+            <article tuiCardLarge="compact" class="check-card">
+              <div tuiHeader="h5">
+                <div tuiTitle>Access token checklist</div>
+                <tui-icon icon="@tui.circle-check" />
+              </div>
+              <ul>
+                <li>Send the token using the Bearer authorization scheme.</li>
+                <li>Use OIDC tokens only with their intended resource endpoints.</li>
+                <li>Use JSON API tokens only with this server's protected REST endpoints.</li>
+              </ul>
+            </article>
+          </div>
+        </section>
 
-                <h3>Call UserInfo</h3>
-                <pre><code>curl http://localhost:8080/userinfo \
-  -H "Authorization: Bearer &#123;oidc-access-token&#125;"</code></pre>
+        <section id="api" tuiCardLarge class="doc-section">
+          <div tuiHeader="h2">
+            <div tuiTitle>
+              Server-owned JWT login API
+              <span tuiSubtitle>
+                Direct email/password authentication for first-party REST endpoints.
+              </span>
+            </div>
+            <span appearance="accent" size="m" tuiBadge>JSON API</span>
+          </div>
 
-                <div class="cards two-col">
-                    <article class="info-card compact">
-                        <h3>ID token validation</h3>
-                        <ul>
-                            <li>Validate the RSA signature using <code>/oauth2/jwks</code>.</li>
-                            <li>Validate <code>iss</code> against the configured issuer.</li>
-                            <li>Validate expiration and issued-at times.</li>
-                            <li>Validate <code>nonce</code> if one was sent in the authorize request.</li>
-                        </ul>
-                    </article>
-                    <article class="info-card compact">
-                        <h3>Access token usage</h3>
-                        <ul>
-                            <li>Send as <code>Authorization: Bearer &#123;token&#125;</code>.</li>
-                            <li>Use OIDC access tokens with OIDC resource endpoints such as <code>/userinfo</code>.</li>
-                            <li>Use the JSON API token only with this server's protected REST endpoints.</li>
-                        </ul>
-                    </article>
-                </div>
-            </section>
+          <div appearance="warning" icon="@tui.triangle-alert" size="m" tuiNotification>
+            These endpoints are not part of the OAuth2/OIDC flow. They issue an HS256 API access
+            token and an HTTP-only refresh cookie.
+          </div>
 
-            <section id="api" class="doc-section">
-                <p class="eyebrow">JSON API</p>
-                <h2>Server-owned JWT login API</h2>
-                <p>
-                    These endpoints are separate from OAuth2/OIDC. They authenticate directly with email/password and
-                    issue this server's own HS256 API access token plus an HTTP-only refresh cookie.
-                </p>
+          <div class="endpoint-list compact-list">
+            <div>
+              <span appearance="info" size="s" tuiBadge>POST</span>
+              <code>/auth/login</code>
+              <span>Authenticate JSON email/password credentials.</span>
+            </div>
+            <div>
+              <span appearance="info" size="s" tuiBadge>POST</span>
+              <code>/auth/refresh</code>
+              <span>Rotate the refresh cookie and issue a new access token.</span>
+            </div>
+            <div>
+              <span appearance="positive" size="s" tuiBadge>GET</span>
+              <code>/auth/me</code>
+              <span>Return the current API user from the bearer token.</span>
+            </div>
+            <div>
+              <span appearance="info" size="s" tuiBadge>POST</span>
+              <code>/auth/logout</code>
+              <span>Invalidate the current refresh token cookie.</span>
+            </div>
+          </div>
 
-                <div class="endpoint-list">
-                    <div><code>POST /auth/login</code><span>Authenticate with JSON email/password credentials.</span></div>
-                    <div><code>POST /auth/refresh</code><span>Rotate the refresh token cookie and issue a new API access token.</span></div>
-                    <div><code>GET /auth/me</code><span>Return the current API user from the bearer token.</span></div>
-                    <div><code>POST /auth/logout</code><span>Invalidate the current refresh token cookie.</span></div>
-                </div>
-
-                <h3>Login</h3>
-                <pre><code>curl -X POST http://localhost:8080/auth/login \
+          <h3>Login</h3>
+          <pre><code>curl -X POST http://localhost:8080/auth/login \
   -H "Content-Type: application/json" \
   -d '&#123;
     "email": "user&#64;example.com",
     "password": "user-password"
   &#125;'</code></pre>
 
-                <h3>Login response</h3>
-                <pre><code>HTTP/1.1 200 OK
+          <h3>Login response</h3>
+          <pre><code>HTTP/1.1 200 OK
 Set-Cookie: refresh_token=...; Path=/auth; HttpOnly; Secure; SameSite=Lax
 
 &#123;
   "accessToken": "eyJ...",
-  "accessTokenExpiresAt": "2026-06-17T15:00:00Z"
+  "accessTokenExpiresAt": "2026-06-18T15:00:00Z"
 &#125;</code></pre>
 
-                <h3>Refresh</h3>
-                <pre><code>curl -X POST http://localhost:8080/auth/refresh \
-  -b "refresh_token=&#123;refresh-token-cookie&#125;"</code></pre>
+          <div class="command-grid api-commands">
+            <article tuiCardLarge="compact">
+              <span appearance="neutral" size="s" tuiBadge>Refresh</span>
+              <code
+                >curl -X POST localhost:8080/auth/refresh -b
+                "refresh_token=&#123;cookie&#125;"</code
+              >
+            </article>
+            <article tuiCardLarge="compact">
+              <span appearance="neutral" size="s" tuiBadge>Current user</span>
+              <code>curl localhost:8080/auth/me -H "Authorization: Bearer &#123;token&#125;"</code>
+            </article>
+            <article tuiCardLarge="compact">
+              <span appearance="neutral" size="s" tuiBadge>Logout</span>
+              <code
+                >curl -X POST localhost:8080/auth/logout -b "refresh_token=&#123;cookie&#125;"</code
+              >
+            </article>
+          </div>
+        </section>
 
-                <h3>Current user</h3>
-                <pre><code>curl http://localhost:8080/auth/me \
-  -H "Authorization: Bearer &#123;api-access-token&#125;"</code></pre>
+        <section id="errors" tuiCardLarge class="doc-section">
+          <div tuiHeader="h2">
+            <div tuiTitle>
+              Common failure modes
+              <span tuiSubtitle
+                >Start with exact redirect URIs, PKCE state, and token audience.</span
+              >
+            </div>
+            <span appearance="negative" size="m" tuiBadge>Errors</span>
+          </div>
 
-                <h3>Logout</h3>
-                <pre><code>curl -X POST http://localhost:8080/auth/logout \
-  -b "refresh_token=&#123;refresh-token-cookie&#125;"</code></pre>
-            </section>
+          <div class="error-list">
+            <article tuiCardLarge="compact">
+              <tui-icon icon="@tui.circle-alert" />
+              <div>
+                <code>invalid_client</code>
+                <p>Wrong client ID, unsupported client authentication, or missing registration.</p>
+              </div>
+            </article>
+            <article tuiCardLarge="compact">
+              <tui-icon icon="@tui.circle-alert" />
+              <div>
+                <code>invalid_grant</code>
+                <p>The code expired, was already used, or does not match the PKCE verifier.</p>
+              </div>
+            </article>
+            <article tuiCardLarge="compact">
+              <tui-icon icon="@tui.circle-alert" />
+              <div>
+                <code>invalid_redirect_uri</code>
+                <p>The redirect URI does not exactly match the registered value.</p>
+              </div>
+            </article>
+            <article tuiCardLarge="compact">
+              <tui-icon icon="@tui.circle-alert" />
+              <div>
+                <code>403 on POST /login</code>
+                <p>The Spring Security CSRF token is missing or stale.</p>
+              </div>
+            </article>
+            <article tuiCardLarge="compact">
+              <tui-icon icon="@tui.circle-alert" />
+              <div>
+                <code>401 from /auth/*</code>
+                <p>Credentials, refresh cookie, or bearer token are missing or invalid.</p>
+              </div>
+            </article>
+          </div>
+        </section>
 
-            <section id="errors" class="doc-section">
-                <p class="eyebrow">Errors</p>
-                <h2>Common failure modes</h2>
-                <div class="endpoint-list">
-                    <div>
-                        <code>invalid_client</code>
-                        <span>Wrong <code>client_id</code>, unsupported client authentication, or missing client registration.</span>
-                    </div>
-                    <div>
-                        <code>invalid_grant</code>
-                        <span>Authorization code expired, already used, or does not match the PKCE verifier.</span>
-                    </div>
-                    <div>
-                        <code>invalid_redirect_uri</code>
-                        <span>The redirect URI does not exactly match the registered URI.</span>
-                    </div>
-                    <div>
-                        <code>403 on POST /login</code>
-                        <span>Missing or stale Spring Security CSRF token on the login form.</span>
-                    </div>
-                    <div>
-                        <code>401 from /auth/*</code>
-                        <span>Invalid API credentials, invalid refresh token, or missing bearer token.</span>
-                    </div>
-                </div>
-            </section>
+        <section id="local-dev" tuiCardLarge class="doc-section local-dev">
+          <div tuiHeader="h2">
+            <div tuiTitle>
+              Run locally
+              <span tuiSubtitle>Bring up persistence, backend, and frontend in that order.</span>
+            </div>
+            <span appearance="positive" size="m" tuiBadge>Local development</span>
+          </div>
 
-            <section id="local-dev" class="doc-section">
-                <p class="eyebrow">Local Development</p>
-                <h2>Run locally</h2>
-                <ol class="steps">
-                    <li>Start Postgres with <code>docker compose up -d postgres</code>.</li>
-                    <li>Run the app with <code>./scripts/dev-run</code>; it creates persistent development OAuth RSA keys under <code>secrets/</code> when needed.</li>
-                    <li>Run the frontend with <code>npm start</code>, then open <code>http://localhost:4200/docs</code> for this page.</li>
-                    <li>Use an active seeded or created user account to complete the browser login step.</li>
-                </ol>
-            </section>
-        </div>
-    </main>
+          <ol class="local-steps">
+            <li tuiCardLarge="compact">
+              <span>1</span>
+              <div>
+                <strong>Start Postgres</strong>
+                <code>docker compose up -d postgres</code>
+              </div>
+            </li>
+            <li tuiCardLarge="compact">
+              <span>2</span>
+              <div>
+                <strong>Run IAM Server</strong>
+                <code>./scripts/dev-run</code>
+                <small>Development OAuth RSA keys are created under <code>secrets/</code>.</small>
+              </div>
+            </li>
+            <li tuiCardLarge="compact">
+              <span>3</span>
+              <div>
+                <strong>Run the Angular frontend</strong>
+                <code>npm start</code>
+                <small>Open <code>http://localhost:4200/docs</code>.</small>
+              </div>
+            </li>
+            <li tuiCardLarge="compact">
+              <span>4</span>
+              <div>
+                <strong>Complete browser login</strong>
+                <small>Use an active seeded or newly created user account.</small>
+              </div>
+            </li>
+          </ol>
+        </section>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    <div>
+      <span tuiSurface class="brand-mark"><tui-icon icon="@tui.shield-check" /></span>
+      <span>IAM Server documentation</span>
+    </div>
+    <span>Angular 19 · Taiga UI 5 · Spring Authorization Server</span>
+  </footer>
+</div>
