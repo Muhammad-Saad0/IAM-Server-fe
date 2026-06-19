@@ -27,12 +27,13 @@
 
   <main>
     <section tuiCardLarge class="welcome-card">
-      <p class="eyebrow">IAM Management Console</p>
-      <div tuiHeader="h1">
-        <div tuiTitle>
-          Control plane for accounts and OAuth clients
-          <span tuiSubtitle>Authenticated through IAM Server using Authorization Code + PKCE.</span>
+      <div class="hero">
+        <div>
+          <p class="eyebrow">IAM Management Console</p>
+          <h1>Control plane for accounts and OAuth clients</h1>
+          <p class="hero-copy">Authenticated through IAM Server using Authorization Code + PKCE.</p>
         </div>
+
         <span appearance="positive" size="m" tuiBadge>Authenticated</span>
       </div>
 
@@ -54,7 +55,7 @@
           <span tuiSurface class="action-icon">
             <tui-icon icon="@tui.user-plus" />
           </span>
-          <span>
+          <span class="action-copy">
             <small class="action-kicker">Account Management</small>
             <strong>Create account</strong>
             <small>Add a new active IAM account with USER and/or ADMIN roles.</small>
@@ -66,7 +67,7 @@
           <span tuiSurface class="action-icon">
             <tui-icon icon="@tui.workflow" />
           </span>
-          <span>
+          <span class="action-copy">
             <small class="action-kicker">OAuth Management</small>
             <strong>Create OAuth client</strong>
             <small>Create a public authorization-code client with PKCE.</small>

@@ -77,8 +77,10 @@ main {
   position: relative;
   overflow: hidden;
   width: min(100%, 54rem);
+  padding: 1.25rem !important;
   border: 1px solid var(--iam-border);
   border-radius: 1rem;
+  color: var(--tui-text-primary);
   background: var(--iam-surface);
   box-shadow: var(--iam-shadow-soft);
 }
@@ -87,9 +89,34 @@ main {
   position: relative;
 }
 
+.hero {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1.5rem;
+}
+
+.hero h1 {
+  max-width: 34rem;
+  margin: 0;
+  color: var(--tui-text-primary);
+  font-size: clamp(1.45rem, 3vw, 2rem);
+  font-weight: 800;
+  letter-spacing: -0.045em;
+  line-height: 1.08;
+}
+
+.hero-copy {
+  max-width: 34rem;
+  margin: 0.5rem 0 0;
+  color: var(--tui-text-secondary);
+  font-size: 0.92rem;
+  line-height: 1.5;
+}
+
 .eyebrow {
   width: fit-content;
-  margin: 0 0 0.75rem;
+  margin: 0 0 0.6rem;
   border: 1px solid var(--tui-border-normal);
   border-radius: 999px;
   padding: 0.28rem 0.62rem;
@@ -156,7 +183,7 @@ main {
   padding: 1.05rem;
   border: 1px solid var(--iam-border);
   border-radius: 0.9rem;
-  color: inherit;
+  color: var(--tui-text-primary);
   text-decoration: none;
   background: var(--iam-surface-strong);
   box-shadow: var(--iam-shadow-soft);
@@ -181,12 +208,14 @@ main {
   transform: translateY(-2px);
 }
 
-.action-card span:last-child {
+.action-copy {
   display: grid;
   gap: 0.45rem;
+  color: var(--tui-text-primary);
 }
 
 .action-card strong {
+  color: var(--tui-text-primary);
   font-size: 1.08rem;
   font-weight: 800;
   letter-spacing: -0.04em;
@@ -200,7 +229,7 @@ main {
 }
 
 .action-kicker {
-  color: var(--tui-text-accent) !important;
+  color: var(--tui-text-secondary) !important;
   font-size: 0.68rem;
   font-weight: 800;
   letter-spacing: 0.12em;
