@@ -5,6 +5,7 @@
   background:
     radial-gradient(circle at 80% 0%, rgba(112, 92, 255, 0.14), transparent 30rem),
     var(--tui-background-base);
+  animation: iam-page-enter 360ms cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
 .admin-shell {
@@ -13,7 +14,7 @@
 }
 
 header {
-  min-height: 5rem;
+  min-height: 4.75rem;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -23,19 +24,20 @@ header {
 .brand {
   display: inline-flex;
   align-items: center;
-  gap: 0.75rem;
+  gap: 0.875rem;
   color: inherit;
   text-decoration: none;
 }
 
 .brand-mark {
-  width: 2.75rem;
-  height: 2.75rem;
+  width: 2.55rem;
+  height: 2.55rem;
   display: grid;
   place-items: center;
   color: var(--tui-text-primary-on-accent-1);
-  border-radius: var(--tui-radius-l);
-  background: linear-gradient(135deg, var(--tui-background-accent-1), #705cff);
+  border-radius: 0.75rem;
+  background: var(--iam-accent-gradient);
+  box-shadow: 0 0.8rem 1.8rem rgba(112, 92, 255, 0.18);
 }
 
 .brand > span:last-child {
@@ -43,12 +45,21 @@ header {
 }
 
 .brand strong {
-  font: var(--tui-typography-ui-l);
+  font-size: 1.05rem;
+  font-weight: 800;
+  letter-spacing: -0.035em;
 }
 
 .brand small,
 .label {
   color: var(--tui-text-secondary);
+}
+
+.brand small {
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
 }
 
 nav {
@@ -58,33 +69,79 @@ nav {
 
 main {
   display: grid;
-  min-height: calc(100dvh - 5rem);
+  min-height: calc(100dvh - 4.75rem);
   place-items: center;
-  padding-block: 3rem 6rem;
+  padding-block: 1rem 1.75rem;
 }
 
 .welcome-card {
-  width: min(100%, 48rem);
-  border: 1px solid var(--tui-border-normal);
+  position: relative;
+  overflow: hidden;
+  width: min(100%, 54rem);
+  border: 1px solid var(--iam-border);
+  border-radius: 1rem;
+  background: var(--iam-surface);
+  box-shadow: var(--iam-shadow);
+  backdrop-filter: blur(18px);
+}
+
+.welcome-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.08), transparent 38%),
+    radial-gradient(circle at 88% 10%, rgba(112, 92, 255, 0.09), transparent 18rem);
+}
+
+.welcome-card > * {
+  position: relative;
+}
+
+.eyebrow {
+  width: fit-content;
+  margin: 0 0 0.75rem;
+  border: 1px solid color-mix(in srgb, var(--tui-background-accent-1) 32%, transparent);
+  border-radius: 999px;
+  padding: 0.28rem 0.62rem;
+  color: var(--tui-text-accent);
+  background: color-mix(in srgb, var(--tui-background-accent-1) 9%, transparent);
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
 }
 
 .identity {
   display: grid;
-  gap: 1.5rem;
-  margin-top: 2rem;
-  padding: 1.5rem;
-  border-radius: var(--tui-radius-l);
-  background: var(--tui-background-neutral-1);
+  gap: 0.85rem;
+  margin-top: 1.35rem;
+  padding: 0.75rem 0.85rem;
+  border: 1px solid var(--iam-border);
+  border-radius: 0.85rem;
+  background: color-mix(in srgb, var(--tui-background-neutral-1) 62%, transparent);
+  animation: iam-soft-reveal 360ms 90ms cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
 .identity > div {
   display: grid;
-  gap: 0.5rem;
+  gap: 0.45rem;
+  align-content: center;
+  min-height: 2.75rem;
 }
 
 .identity strong {
-  font: var(--tui-typography-heading-h5);
+  font-size: 1rem;
+  font-weight: 700;
   overflow-wrap: anywhere;
+}
+
+.label {
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
 }
 
 .roles {
@@ -97,47 +154,100 @@ main {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 1rem;
-  margin-top: 1.5rem;
+  margin-top: 1rem;
 }
 
 .action-card {
+  position: relative;
+  overflow: hidden;
   display: grid;
-  grid-template-columns: auto 1fr;
-  align-items: center;
-  gap: 0.875rem;
-  padding: 1rem;
-  border: 1px solid var(--tui-border-normal);
-  border-radius: var(--tui-radius-l);
+  grid-template-columns: auto 1fr auto;
+  align-items: start;
+  gap: 1rem;
+  min-height: 7.4rem;
+  padding: 1.05rem;
+  border: 1px solid color-mix(in srgb, var(--tui-background-accent-1) 18%, var(--iam-border));
+  border-radius: 0.9rem;
   color: inherit;
   text-decoration: none;
-  background: var(--tui-background-neutral-1);
+  background:
+    linear-gradient(
+      145deg,
+      color-mix(in srgb, var(--tui-background-accent-1) 6%, transparent),
+      transparent 52%
+    ),
+    var(--iam-surface-strong);
+  box-shadow: var(--iam-shadow-soft);
+  transition:
+    border-color 160ms ease,
+    box-shadow 160ms ease,
+    transform 160ms ease;
+  animation: iam-soft-reveal 360ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.action-card:nth-child(1) {
+  animation-delay: 150ms;
+}
+
+.action-card:nth-child(2) {
+  animation-delay: 220ms;
+}
+
+.action-card::after {
+  content: '';
+  position: absolute;
+  inset: auto -10% -35% 38%;
+  height: 6rem;
+  pointer-events: none;
+  background: radial-gradient(circle, rgba(112, 92, 255, 0.2), transparent 68%);
 }
 
 .action-card:hover {
-  border-color: var(--tui-border-focus);
+  border-color: color-mix(in srgb, var(--tui-background-accent-1) 55%, var(--iam-border));
+  box-shadow: 0 1rem 2.5rem rgba(112, 92, 255, 0.12);
+  transform: translateY(-2px);
 }
 
 .action-card span:last-child {
   display: grid;
-  gap: 0.25rem;
+  gap: 0.45rem;
 }
 
 .action-card strong {
-  font: var(--tui-typography-ui-l);
+  font-size: 1.08rem;
+  font-weight: 800;
+  letter-spacing: -0.04em;
+  line-height: 1.1;
 }
 
 .action-card small {
+  font-size: 0.84rem;
   color: var(--tui-text-secondary);
+  line-height: 1.45;
+}
+
+.action-kicker {
+  color: var(--tui-text-accent) !important;
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
 }
 
 .action-icon {
-  width: 2.5rem;
-  height: 2.5rem;
+  width: 2.75rem;
+  height: 2.75rem;
   display: grid;
   place-items: center;
   color: var(--tui-text-primary-on-accent-1);
-  border-radius: var(--tui-radius-m);
-  background: var(--tui-background-accent-1);
+  border-radius: 0.75rem;
+  background: var(--iam-accent-gradient);
+  box-shadow: 0 0.75rem 1.5rem rgba(112, 92, 255, 0.16);
+}
+
+.action-arrow {
+  margin-top: 0.2rem;
+  color: var(--tui-text-accent);
 }
 
 @media (max-width: 40rem) {
@@ -160,6 +270,10 @@ main {
   }
 
   .management-actions {
+    grid-template-columns: 1fr;
+  }
+
+  .identity {
     grid-template-columns: 1fr;
   }
 }

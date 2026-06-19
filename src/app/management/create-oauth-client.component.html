@@ -86,7 +86,7 @@
         <dl class="details">
           <div>
             <dt>Client ID</dt>
-            <dd>{{ client.clientId }}</dd>
+            <dd class="technical-value">{{ client.clientId }}</dd>
           </div>
           <div>
             <dt>Name</dt>
@@ -94,11 +94,11 @@
           </div>
           <div>
             <dt>Issued at</dt>
-            <dd>{{ client.clientIdIssuedAt }}</dd>
+            <dd class="technical-value">{{ client.clientIdIssuedAt }}</dd>
           </div>
           <div>
             <dt>Redirect URIs</dt>
-            <dd>
+            <dd class="technical-value">
               @for (redirectUri of client.redirectUris; track redirectUri) {
                 <div>{{ redirectUri }}</div>
               }

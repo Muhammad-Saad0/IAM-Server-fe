@@ -1,11 +1,11 @@
 <div class="admin-shell">
   <header>
-    <a class="brand" routerLink="/" aria-label="Admin UI home">
+    <a class="brand" routerLink="/" aria-label="Admin Portal home">
       <span tuiSurface class="brand-mark">
         <tui-icon icon="@tui.shield-check" />
       </span>
       <span>
-        <strong>Admin UI</strong>
+        <strong>Admin Portal</strong>
         <small>IAM Server management</small>
       </span>
     </a>
@@ -27,21 +27,17 @@
 
   <main>
     <section tuiCardLarge class="welcome-card">
+      <p class="eyebrow">IAM Management Console</p>
       <div tuiHeader="h1">
         <div tuiTitle>
-          Admin UI
-          <span tuiSubtitle>You are authenticated through IAM Server.</span>
+          Control plane for accounts and OAuth clients
+          <span tuiSubtitle>Authenticated through IAM Server using Authorization Code + PKCE.</span>
         </div>
         <span appearance="positive" size="m" tuiBadge>Authenticated</span>
       </div>
 
-      <div class="identity">
-        <div>
-          <span class="label">Signed in as</span>
-          <strong>{{ auth.email() ?? 'Authenticated user' }}</strong>
-        </div>
-
-        @if (auth.roles().length) {
+      @if (auth.roles().length) {
+        <div class="identity">
           <div>
             <span class="label">Roles</span>
             <div class="roles">
@@ -50,8 +46,8 @@
               }
             </div>
           </div>
-        }
-      </div>
+        </div>
+      }
 
       <div class="management-actions" aria-label="Management actions">
         <a class="action-card" routerLink="/accounts/new">
@@ -59,9 +55,11 @@
             <tui-icon icon="@tui.user-plus" />
           </span>
           <span>
+            <small class="action-kicker">Account Management</small>
             <strong>Create account</strong>
             <small>Add a new active IAM account with USER and/or ADMIN roles.</small>
           </span>
+          <tui-icon class="action-arrow" icon="@tui.arrow-right" />
         </a>
 
         <a class="action-card" routerLink="/oauth-clients/new">
@@ -69,9 +67,11 @@
             <tui-icon icon="@tui.workflow" />
           </span>
           <span>
+            <small class="action-kicker">OAuth Management</small>
             <strong>Create OAuth client</strong>
             <small>Create a public authorization-code client with PKCE.</small>
           </span>
+          <tui-icon class="action-arrow" icon="@tui.arrow-right" />
         </a>
       </div>
     </section>
