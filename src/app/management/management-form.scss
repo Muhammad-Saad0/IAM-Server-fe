@@ -1,0 +1,187 @@
+:host {
+  display: block;
+  min-height: 100dvh;
+  color: var(--tui-text-primary);
+  background:
+    radial-gradient(circle at 80% 0%, rgba(112, 92, 255, 0.14), transparent 30rem),
+    var(--tui-background-base);
+}
+
+.management-shell {
+  width: min(100% - 3rem, 64rem);
+  margin-inline: auto;
+  padding-block: 2rem 4rem;
+}
+
+.page-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.page-title {
+  margin: 0;
+  font: var(--tui-typography-heading-h3);
+}
+
+.page-subtitle {
+  margin: 0.25rem 0 0;
+  color: var(--tui-text-secondary);
+}
+
+.management-card {
+  border: 1px solid var(--tui-border-normal);
+}
+
+form {
+  display: grid;
+  gap: 1.25rem;
+  margin-top: 1.5rem;
+}
+
+label,
+fieldset {
+  display: grid;
+  gap: 0.5rem;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+legend,
+.label-text {
+  font: var(--tui-typography-ui-m);
+}
+
+input,
+textarea {
+  width: 100%;
+  box-sizing: border-box;
+  border: 1px solid var(--tui-border-normal);
+  border-radius: var(--tui-radius-m);
+  padding: 0.75rem 0.875rem;
+  color: var(--tui-text-primary);
+  background: var(--tui-background-base);
+  font: inherit;
+}
+
+textarea {
+  min-height: 8rem;
+  resize: vertical;
+}
+
+input:focus,
+textarea:focus {
+  outline: 2px solid var(--tui-background-accent-1);
+  outline-offset: 2px;
+}
+
+.hint,
+.field-error {
+  margin: 0;
+  font: var(--tui-typography-text-s);
+}
+
+.hint {
+  color: var(--tui-text-secondary);
+}
+
+.field-error,
+.api-error {
+  color: var(--tui-text-negative);
+}
+
+.checkbox-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.checkbox-option {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  width: auto;
+  padding: 0.625rem 0.75rem;
+  border: 1px solid var(--tui-border-normal);
+  border-radius: var(--tui-radius-m);
+  background: var(--tui-background-neutral-1);
+}
+
+.checkbox-option input {
+  width: auto;
+}
+
+.form-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.api-error,
+.success-panel {
+  margin-top: 1.5rem;
+  padding: 1rem;
+  border-radius: var(--tui-radius-m);
+}
+
+.api-error {
+  border: 1px solid var(--tui-text-negative);
+  background: color-mix(in srgb, var(--tui-text-negative) 8%, transparent);
+}
+
+.api-error strong,
+.success-panel strong {
+  display: block;
+  margin-bottom: 0.25rem;
+}
+
+.success-panel {
+  border: 1px solid var(--tui-text-positive);
+  background: color-mix(in srgb, var(--tui-text-positive) 8%, transparent);
+}
+
+.details {
+  display: grid;
+  gap: 0.75rem;
+  margin: 1rem 0 0;
+}
+
+.details div {
+  display: grid;
+  gap: 0.25rem;
+}
+
+.details dt {
+  color: var(--tui-text-secondary);
+  font: var(--tui-typography-text-s);
+}
+
+.details dd {
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+
+.pill-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+@media (max-width: 40rem) {
+  .management-shell {
+    width: min(100% - 2rem, 64rem);
+  }
+
+  .page-nav {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .form-actions {
+    align-items: stretch;
+    flex-direction: column;
+  }
+}

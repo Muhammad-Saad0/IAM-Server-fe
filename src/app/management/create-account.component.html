@@ -1,0 +1,115 @@
+<div class="management-shell">
+  <nav class="page-nav" aria-label="Management navigation">
+    <div>
+      <h1 class="page-title">Create account</h1>
+      <p class="page-subtitle">Create an active IAM account with one or more roles.</p>
+    </div>
+
+    <a appearance="secondary" iconStart="@tui.arrow-left" routerLink="/" size="m" tuiButton>
+      Dashboard
+    </a>
+  </nav>
+
+  <section tuiCardLarge class="management-card">
+    <div tuiHeader="h2">
+      <div tuiTitle>
+        New account
+        <span tuiSubtitle
+          >Passwords are sent once and stored only as BCrypt hashes by IAM Server.</span
+        >
+      </div>
+      <tui-icon icon="@tui.user-plus" />
+    </div>
+
+    <form [formGroup]="form" (ngSubmit)="submit()">
+      <label>
+        <span class="label-text">Email</span>
+        <input
+          autocomplete="email"
+          formControlName="email"
+          placeholder="user@example.com"
+          type="email"
+        />
+        @if (form.controls.email.touched && form.controls.email.invalid) {
+          <p class="field-error">Enter a valid email address.</p>
+        }
+      </label>
+
+      <label>
+        <span class="label-text">Initial password</span>
+        <input
+          autocomplete="new-password"
+          formControlName="password"
+          minlength="8"
+          maxlength="128"
+          placeholder="At least 8 characters"
+          type="password"
+        />
+        @if (form.controls.password.touched && form.controls.password.invalid) {
+          <p class="field-error">Password must be between 8 and 128 characters.</p>
+        }
+      </label>
+
+      <fieldset formGroupName="roles">
+        <legend>Roles</legend>
+        <div class="checkbox-grid">
+          @for (role of roleOptions; track role) {
+            <label class="checkbox-option">
+              <input [formControlName]="role" type="checkbox" (change)="clearRoleError()" />
+              {{ role }}
+            </label>
+          }
+        </div>
+        @if (form.controls.roles.touched && form.controls.roles.invalid) {
+          <p class="field-error">Select at least one role.</p>
+        }
+      </fieldset>
+
+      <div class="form-actions">
+        <button appearance="primary" iconStart="@tui.user-plus" size="m" tuiButton type="submit">
+          {{ submitting() ? 'Creating…' : 'Create account' }}
+        </button>
+        <a appearance="flat" routerLink="/" size="m" tuiButton>Cancel</a>
+      </div>
+    </form>
+
+    @if (apiError(); as error) {
+      <div class="api-error" role="alert">
+        <strong>{{ error.code }}</strong>
+        {{ error.message }}
+      </div>
+    }
+
+    @if (createdAccount(); as account) {
+      <div class="success-panel" role="status">
+        <strong>Account created</strong>
+        <dl class="details">
+          <div>
+            <dt>ID</dt>
+            <dd>{{ account.id }}</dd>
+          </div>
+          <div>
+            <dt>Email</dt>
+            <dd>{{ account.email }}</dd>
+          </div>
+          <div>
+            <dt>Status</dt>
+            <dd>{{ account.status }}</dd>
+          </div>
+          <div>
+            <dt>Roles</dt>
+            <dd class="pill-list">
+              @for (role of account.roles; track role) {
+                <span appearance="info" size="m" tuiBadge>{{ role }}</span>
+              }
+            </dd>
+          </div>
+          <div>
+            <dt>Created at</dt>
+            <dd>{{ account.createdAt }}</dd>
+          </div>
+        </dl>
+      </div>
+    }
+  </section>
+</div>

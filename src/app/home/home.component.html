@@ -1,0 +1,79 @@
+<div class="admin-shell">
+  <header>
+    <a class="brand" routerLink="/" aria-label="Admin UI home">
+      <span tuiSurface class="brand-mark">
+        <tui-icon icon="@tui.shield-check" />
+      </span>
+      <span>
+        <strong>Admin UI</strong>
+        <small>IAM Server management</small>
+      </span>
+    </a>
+
+    <nav aria-label="Account actions">
+      <a appearance="secondary" routerLink="/docs" size="m" tuiButton>Documentation</a>
+      <button
+        appearance="secondary-destructive"
+        iconStart="@tui.log-out"
+        size="m"
+        tuiButton
+        type="button"
+        (click)="auth.logout()"
+      >
+        Log out
+      </button>
+    </nav>
+  </header>
+
+  <main>
+    <section tuiCardLarge class="welcome-card">
+      <div tuiHeader="h1">
+        <div tuiTitle>
+          Admin UI
+          <span tuiSubtitle>You are authenticated through IAM Server.</span>
+        </div>
+        <span appearance="positive" size="m" tuiBadge>Authenticated</span>
+      </div>
+
+      <div class="identity">
+        <div>
+          <span class="label">Signed in as</span>
+          <strong>{{ auth.email() ?? 'Authenticated user' }}</strong>
+        </div>
+
+        @if (auth.roles().length) {
+          <div>
+            <span class="label">Roles</span>
+            <div class="roles">
+              @for (role of auth.roles(); track role) {
+                <span appearance="info" size="m" tuiBadge>{{ role }}</span>
+              }
+            </div>
+          </div>
+        }
+      </div>
+
+      <div class="management-actions" aria-label="Management actions">
+        <a class="action-card" routerLink="/accounts/new">
+          <span tuiSurface class="action-icon">
+            <tui-icon icon="@tui.user-plus" />
+          </span>
+          <span>
+            <strong>Create account</strong>
+            <small>Add a new active IAM account with USER and/or ADMIN roles.</small>
+          </span>
+        </a>
+
+        <a class="action-card" routerLink="/oauth-clients/new">
+          <span tuiSurface class="action-icon">
+            <tui-icon icon="@tui.workflow" />
+          </span>
+          <span>
+            <strong>Create OAuth client</strong>
+            <small>Create a public authorization-code client with PKCE.</small>
+          </span>
+        </a>
+      </div>
+    </section>
+  </main>
+</div>

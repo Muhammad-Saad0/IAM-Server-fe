@@ -201,11 +201,14 @@
                 <tr>
                   <td>Redirect URI</td>
                   <td><code>http://localhost:3000/oauth/callback</code></td>
-                  <td>Codes are sent only to registered redirect URIs.</td>
+                  <td>
+                    Production uses
+                    <code>https://iam-server-fe.vercel.app/oauth/callback</code>.
+                  </td>
                 </tr>
                 <tr>
                   <td>Scopes</td>
-                  <td><code>openid profile email</code></td>
+                  <td><code>openid email iam.manage</code></td>
                   <td>Consent is disabled for the seeded client.</td>
                 </tr>
               </tbody>

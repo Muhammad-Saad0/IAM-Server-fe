@@ -13,6 +13,7 @@
 ### Task 1: Expose OIDC access token to API services
 
 **Files:**
+
 - Modify: `src/app/auth/auth.service.ts`
 
 - [ ] Add a public `accessToken()` method that returns the current access token only when the OAuth service reports a valid access token.
@@ -22,6 +23,7 @@
 ### Task 2: Add typed management API service
 
 **Files:**
+
 - Create: `src/app/management/management-api.service.ts`
 
 - [ ] Define request/response interfaces for account creation, OAuth-client creation, and backend API errors.
@@ -37,6 +39,7 @@
 ### Task 3: Add account creation page
 
 **Files:**
+
 - Create: `src/app/management/create-account.component.ts`
 - Create: `src/app/management/create-account.component.html`
 - Create: `src/app/management/management-form.scss`
@@ -50,6 +53,7 @@
 ### Task 4: Add OAuth-client creation page
 
 **Files:**
+
 - Create: `src/app/management/create-oauth-client.component.ts`
 - Create: `src/app/management/create-oauth-client.component.html`
 - Modify: `src/app/management/management-form.scss`
@@ -65,6 +69,7 @@
 ### Task 5: Wire protected routes and dashboard links
 
 **Files:**
+
 - Modify: `src/app/app.routes.ts`
 - Modify: `src/app/home/home.component.html`
 - Modify: `src/app/home/home.component.scss`
@@ -76,6 +81,7 @@
 ### Task 6: Verify and commit
 
 **Files:**
+
 - All modified frontend files.
 
 - [ ] Run Prettier over changed frontend files.

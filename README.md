@@ -10,9 +10,30 @@ To start a local development server, run:
 ng serve
 ```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+Once the server is running, open your browser and navigate to `http://localhost:3000/`.
+Unauthenticated visits to `/` start the IAM Authorization Code + PKCE flow. Documentation
+remains public at `http://localhost:3000/docs`.
 
-IAM Server documentation is available at `http://localhost:4200/docs`.
+## IAM configuration
+
+The browser loads `public/iam-config.js` before Angular starts:
+
+```js
+window.__IAM_CONFIG__ = {
+  issuer: 'http://localhost:8080',
+};
+```
+
+The checked-in value targets local development. Production deployment must publish the
+same file with the deployed IAM issuer. The admin UI uses these callback URLs:
+
+```text
+http://localhost:3000/oauth/callback
+https://iam-server-fe.vercel.app/oauth/callback
+```
+
+Tokens are stored in `sessionStorage`, so authentication survives refreshes in the same
+tab but is cleared when the browser session ends.
 
 ## Code scaffolding
 
