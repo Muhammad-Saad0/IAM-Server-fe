@@ -22,7 +22,7 @@ export class AuthService {
       clientId: 'admin-ui',
       responseType: 'code',
       scope: 'openid email iam.manage',
-      requireHttps: 'remoteOnly',
+      requireHttps: false,
       strictDiscoveryDocumentValidation: true,
       clearHashAfterLogin: true,
     };

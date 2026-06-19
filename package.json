@@ -3,10 +3,14 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "write:iam-config": "node scripts/write-iam-config.mjs",
-    "start": "npm run write:iam-config && ng serve",
-    "build": "npm run write:iam-config && ng build",
-    "watch": "npm run write:iam-config && ng build --watch --configuration development",
+    "select:iam-config": "node scripts/select-iam-config.mjs",
+    "start": "npm run select:iam-config && ng serve",
+    "start:local": "IAM_CONFIG_ENV=local npm start",
+    "start:sandbox": "IAM_CONFIG_ENV=sandbox npm start",
+    "build": "npm run select:iam-config && ng build",
+    "build:local": "IAM_CONFIG_ENV=local npm run build",
+    "build:sandbox": "IAM_CONFIG_ENV=sandbox npm run build",
+    "watch": "npm run select:iam-config && ng build --watch --configuration development",
     "test": "ng test"
   },
   "private": true,

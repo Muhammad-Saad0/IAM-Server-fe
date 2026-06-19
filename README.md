@@ -25,14 +25,45 @@ window.__IAM_CONFIG__ = {
 };
 ```
 
-For local development, copy `.env.example` to `.env` and set:
+The config selector reads one value from `.env` or the shell:
 
 ```env
-IAM_ISSUER=http://localhost:8080
-IAM_API_BASE_URL=http://localhost:8080/api/management
+IAM_CONFIG_ENV=local
 ```
 
-`npm start` and `npm run build` generate `public/iam-config.js` from `.env`.
+It copies one of the static config files to `public/iam-config.js` before Angular starts:
+
+- `local` -> `public/iam-config.local.js`
+- `sandbox` -> `public/iam-config.sandbox.js`
+
+If `IAM_CONFIG_ENV` is not set, it defaults to `local`.
+
+```bash
+npm start
+IAM_CONFIG_ENV=sandbox npm start
+```
+
+Convenience scripts are also available:
+
+```bash
+npm run start:local
+npm run start:sandbox
+npm run build:local
+npm run build:sandbox
+```
+
+For local machine defaults, copy `.env.example` to `.env` and set:
+
+```env
+IAM_CONFIG_ENV=local
+```
+
+Set `IAM_CONFIG_ENV=sandbox` in `.env` for sandbox.
+
+`npm start` and `npm run build` copy the selected static config file to
+`public/iam-config.js`. Restart the dev server after changing config selection. Do not
+use plain `ng serve`, because it bypasses config selection.
+
 Production deployment must publish equivalent runtime config with the deployed IAM issuer
 and management API base URL. The admin UI uses these callback URLs:
 
