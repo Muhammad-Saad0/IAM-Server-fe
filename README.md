@@ -7,7 +7,7 @@ This project was generated using [Angular CLI](https://github.com/angular/angula
 To start a local development server, run:
 
 ```bash
-ng serve
+npm start
 ```
 
 Once the server is running, open your browser and navigate to `http://localhost:3000/`.
@@ -21,11 +21,20 @@ The browser loads `public/iam-config.js` before Angular starts:
 ```js
 window.__IAM_CONFIG__ = {
   issuer: 'http://localhost:8080',
+  apiBaseUrl: 'http://localhost:8080/api/management',
 };
 ```
 
-The checked-in value targets local development. Production deployment must publish the
-same file with the deployed IAM issuer. The admin UI uses these callback URLs:
+For local development, copy `.env.example` to `.env` and set:
+
+```env
+IAM_ISSUER=http://localhost:8080
+IAM_API_BASE_URL=http://localhost:8080/api/management
+```
+
+`npm start` and `npm run build` generate `public/iam-config.js` from `.env`.
+Production deployment must publish equivalent runtime config with the deployed IAM issuer
+and management API base URL. The admin UI uses these callback URLs:
 
 ```text
 http://localhost:3000/oauth/callback
@@ -54,7 +63,7 @@ ng generate --help
 To build the project run:
 
 ```bash
-ng build
+npm run build
 ```
 
 This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.

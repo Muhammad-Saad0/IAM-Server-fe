@@ -1,5 +1,6 @@
 export interface IamRuntimeConfig {
   readonly issuer: string;
+  readonly apiBaseUrl: string;
 }
 
 declare global {
@@ -9,7 +10,10 @@ declare global {
 }
 
 export function iamRuntimeConfig(): IamRuntimeConfig {
+  const issuer = window.__IAM_CONFIG__?.issuer ?? 'http://localhost:8080';
+
   return {
-    issuer: window.__IAM_CONFIG__?.issuer ?? 'http://localhost:8080',
+    issuer,
+    apiBaseUrl: window.__IAM_CONFIG__?.apiBaseUrl ?? `${issuer.replace(/\/+$/, '')}/api/management`,
   };
 }

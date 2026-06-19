@@ -14,7 +14,7 @@ import {
 
 @Injectable({ providedIn: 'root' })
 export class ManagementApiService {
-  private readonly apiBaseUrl = `${iamRuntimeConfig().issuer.replace(/\/+$/, '')}/api/management`;
+  private readonly apiBaseUrl = iamRuntimeConfig().apiBaseUrl.replace(/\/+$/, '');
 
   constructor(
     private readonly http: HttpClient,

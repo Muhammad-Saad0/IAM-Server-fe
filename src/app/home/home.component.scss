@@ -1,6 +1,7 @@
 :host {
   display: block;
   min-height: 100dvh;
+  box-sizing: border-box;
   color: var(--tui-text-primary);
   background:
     radial-gradient(circle at 80% 0%, rgba(112, 92, 255, 0.14), transparent 30rem),
@@ -35,8 +36,9 @@ header {
   display: grid;
   place-items: center;
   color: var(--tui-text-primary-on-accent-1);
-  border-radius: 0.75rem;
+  border-radius: 0.45rem;
   background: var(--iam-accent);
+  box-shadow: var(--iam-shadow-soft);
 }
 
 .brand > span:last-child {
@@ -68,6 +70,7 @@ nav {
 
 main {
   display: grid;
+  box-sizing: border-box;
   min-height: calc(100dvh - 4.75rem);
   place-items: center;
   padding-block: 1rem 1.75rem;
@@ -79,9 +82,10 @@ main {
   width: min(100%, 54rem);
   padding: 1.25rem !important;
   border: 1px solid var(--tui-border-normal);
-  border-radius: 1rem;
-  color: #111827;
+  border-radius: 0.55rem;
+  color: var(--tui-text-primary);
   background: var(--tui-background-base);
+  box-shadow: var(--iam-shadow);
 }
 
 .welcome-card > * {
@@ -98,7 +102,7 @@ main {
 .hero h1 {
   max-width: 34rem;
   margin: 0;
-  color: #111827;
+  color: var(--tui-text-primary);
   font-size: clamp(1.45rem, 3vw, 2rem);
   font-weight: 800;
   letter-spacing: -0.045em;
@@ -108,7 +112,7 @@ main {
 .hero-copy {
   max-width: 34rem;
   margin: 0.5rem 0 0;
-  color: #6b7280;
+  color: var(--tui-text-secondary);
   font-size: 0.92rem;
   line-height: 1.5;
 }
@@ -117,9 +121,9 @@ main {
   width: fit-content;
   margin: 0 0 0.6rem;
   border: 1px solid var(--tui-border-normal);
-  border-radius: 999px;
+  border-radius: 0.35rem;
   padding: 0.28rem 0.62rem;
-  color: #6b7280;
+  color: var(--tui-text-secondary);
   background: var(--tui-background-neutral-1);
   font-size: 0.72rem;
   font-weight: 800;
@@ -133,8 +137,9 @@ main {
   margin-top: 1.35rem;
   padding: 0.75rem 0.85rem;
   border: 1px solid var(--tui-border-normal);
-  border-radius: 0.85rem;
+  border-radius: 0.45rem;
   background: var(--tui-background-neutral-1);
+  box-shadow: var(--iam-shadow-soft);
   animation: iam-soft-reveal 360ms 90ms cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
@@ -181,10 +186,11 @@ main {
   min-height: 7.4rem;
   padding: 1.05rem;
   border: 1px solid var(--tui-border-normal);
-  border-radius: 0.9rem;
-  color: #111827;
+  border-radius: 0.45rem;
+  color: var(--tui-text-primary);
   text-decoration: none;
   background: var(--tui-background-neutral-1);
+  box-shadow: var(--iam-shadow-soft);
   transition:
     border-color 160ms ease,
     box-shadow 160ms ease,
@@ -202,17 +208,18 @@ main {
 
 .action-card:hover {
   border-color: var(--tui-border-focus);
+  box-shadow: var(--iam-shadow);
   transform: translateY(-2px);
 }
 
 .action-copy {
   display: grid;
   gap: 0.45rem;
-  color: #111827;
+  color: var(--tui-text-primary);
 }
 
 .action-card strong {
-  color: #111827;
+  color: var(--tui-text-primary);
   font-size: 1.08rem;
   font-weight: 800;
   letter-spacing: -0.04em;
@@ -221,12 +228,12 @@ main {
 
 .action-card small {
   font-size: 0.84rem;
-  color: #6b7280;
+  color: var(--tui-text-secondary);
   line-height: 1.45;
 }
 
 .action-kicker {
-  color: #6b7280 !important;
+  color: var(--tui-text-secondary) !important;
   font-size: 0.68rem;
   font-weight: 800;
   letter-spacing: 0.12em;
@@ -239,13 +246,14 @@ main {
   display: grid;
   place-items: center;
   color: var(--tui-text-primary-on-accent-1);
-  border-radius: 0.75rem;
+  border-radius: 0.4rem;
   background: var(--iam-accent);
+  box-shadow: var(--iam-shadow-soft);
 }
 
 .action-arrow {
   margin-top: 0.2rem;
-  color: #6b7280;
+  color: var(--tui-text-secondary);
 }
 
 @media (max-width: 40rem) {

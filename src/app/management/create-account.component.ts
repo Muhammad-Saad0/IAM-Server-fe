@@ -1,9 +1,9 @@
 import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { RouterLink } from '@angular/router';
-import { TuiButton, TuiIcon, TuiTitle } from '@taiga-ui/core';
+import { TuiButton, TuiIcon } from '@taiga-ui/core';
 import { TuiBadge } from '@taiga-ui/kit';
-import { TuiCardLarge, TuiHeader } from '@taiga-ui/layout';
+import { TuiCardLarge } from '@taiga-ui/layout';
 import { finalize } from 'rxjs';
 
 import { ManagementApiClientError } from './management-api-error';
@@ -17,16 +17,7 @@ interface FormError {
 
 @Component({
   selector: 'app-create-account',
-  imports: [
-    ReactiveFormsModule,
-    RouterLink,
-    TuiBadge,
-    TuiButton,
-    TuiCardLarge,
-    TuiHeader,
-    TuiIcon,
-    TuiTitle,
-  ],
+  imports: [ReactiveFormsModule, RouterLink, TuiBadge, TuiButton, TuiCardLarge, TuiIcon],
   templateUrl: './create-account.component.html',
   styleUrl: './management-form.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
